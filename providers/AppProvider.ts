@@ -1,5 +1,4 @@
 import { ApplicationContract } from '@ioc:Adonis/Core/Application'
-// import ProductRepository from 'App/Repositories/ProductRepository'
 
 export default class AppProvider {
   constructor (protected app: ApplicationContract) {
@@ -7,7 +6,6 @@ export default class AppProvider {
 
   public register () {
     // Register your own bindings
-    // this.app.container.singleton('ProductRepo', () => new ProductRepository())
   }
 
   public async boot () {
