@@ -1,6 +1,5 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-
 export default class Users extends BaseSchema {
   protected tableName = 'users'
 
@@ -8,8 +7,8 @@ export default class Users extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('username', 255).nullable()
-      table.string('email', 255)
-      table.string('password', 180)
+      table.string('email', 255).unique().notNullable()
+      table.string('password', 180).notNullable()
       table.string('remember_me_token', 255).nullable()
       table.enu('account_type', ['admin', 'customer'], {
         useNative: true,
