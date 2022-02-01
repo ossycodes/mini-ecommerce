@@ -31,7 +31,7 @@ export default class ProductCategoriesController {
         let category = await ProductCategory.findOrFail(request.param('id'))
         
         category.name = payload.name
-        category.status = payload.status
+        category.status = payload.status || false
 
         await category.save()
 
