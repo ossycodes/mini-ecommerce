@@ -6,10 +6,9 @@ export default class LoginValidator {
 
   public schema = schema.create({
     email: schema.string({ trim: true }, [
-      rules.email(),
-      rules.unique({ table: "users", column: "email" }),
+      rules.email()
     ]),
-    password: schema.string({ trim: true }, [rules.confirmed()])
+    password: schema.string({ trim: true })
   })
 
   public messages = {}
