@@ -7,14 +7,20 @@ import CreateProductValidator from 'App/Validators/CreateProductValidator';
 
 export default class ProductsController {
     public async index({response}: HttpContextContract) {
-        const products =  await Product.query().paginate(10)
-        console.log(products);
+        const products =  await Product.query().preload('category').preload('sub_category').paginate(1, 5)
+
         return response.status(200).send(products);
     }
 
     public async show({request, response}: HttpContextContract) {
-        // const product =  await Product.findOrFail(request.param('id'))
-        const product = await Product.query().where('id', 4).preload('category')
+        const product = await Product.query().where('id', request.param('id')).preload('category').preload('sub_category')
+
+        if(product.length === 0) {
+            return response.status(404).send({
+                message: 'product not found'
+            })
+        }
+
         return response.status(200).send(product);
     }
 
@@ -54,8 +60,9 @@ export default class ProductsController {
            await ProductSubCategory.findOrFail(productCategoryId);
         }
         
-        const product = new Product()
+        const product = await Product.findOrFail(request.param('id'));
 
+        product.userId            = auth.user?.id
         product.ProductCategoryId = productCategoryId || null
         product.ProductSubCategoryId = productSubCategoryId || null
         product.title = payload.title
@@ -64,12 +71,11 @@ export default class ProductsController {
 
         await product.save();
         
-        return response.created(product.load('category'));
+        return response.created(product);
     }
 
     public async destroy({request, response}) {
         const product = await Product.findOrFail(request.param('id'))
-
         await product.delete()
 
         return response.status(200).send(product);

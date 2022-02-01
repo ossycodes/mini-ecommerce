@@ -21,7 +21,9 @@ export default class ProductCategory extends BaseModel {
   })
   public status: boolean
 
-  @hasMany(() => ProductSubCategory)
+  @hasMany(() => ProductSubCategory, {
+    foreignKey: 'ProductSubCategoryId',
+  })
   public sub_categories: HasMany<typeof ProductSubCategory>
 
   @column.dateTime({ autoCreate: true })

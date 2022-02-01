@@ -35,7 +35,7 @@ export default class Product extends BaseModel {
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => ProductCategory, {
+  @belongsTo(() => ProductCategory,  {
     foreignKey: 'ProductCategoryId',
   })
   public category: BelongsTo<typeof ProductCategory>

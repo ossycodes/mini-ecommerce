@@ -12,7 +12,7 @@ export default class ProductSubCategory extends BaseModel {
   public id: number
 
   @column()
-  public ProductSubCategoryId: number
+  public ProductCategoryId: number
 
   @column()
   public name: string
@@ -20,7 +20,9 @@ export default class ProductSubCategory extends BaseModel {
   @column()
   public status: boolean
 
-  @belongsTo(() => ProductCategory)
+  @belongsTo(() => ProductCategory, {
+    foreignKey: 'ProductCategoryId',
+  })
   public category: BelongsTo<typeof ProductCategory>
 
   @column.dateTime({ autoCreate: true })
