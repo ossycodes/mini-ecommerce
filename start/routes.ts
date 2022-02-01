@@ -25,7 +25,7 @@ Route
     // Route.resource('/users', 'UsersController').apiOnly()
     // Route.resource('/products', 'ProductsController').apiOnly()
     Route.resource('/categories', 'CategoriesController').apiOnly()
-    // Route.resource('/subcategories', 'CategoriesController').apiOnly()
+    // Route.resource('categories.subcategories', 'SubcategoriesController')
   })
   .prefix('/v1')
   .prefix('/api')
