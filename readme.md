@@ -1,12 +1,12 @@
 
-1. User must be able to sign up (Hint: User Type is Admin) 
-2. User must be able to sign in 
-3. User must be able to create Product Categories CRUD 
-4. User must be able to create Product Sub Categories CRUD 
-5. User must be able to Create Product 
-6. User must be able to Read Product 
-7. User must be able to Update Product 
-8. User must be able to Delete Product 
+1. User can sign up 
+2. User can sign in 
+3. User can create Product Categories CRUD 
+4. User can create Product Sub Categories CRUD 
+5. User can Create Product 
+6. User can Read Product 
+7. User can Update Product 
+8. User can Delete Product 
 
 
 Postman API documentation link https://documenter.getpostman.com/view/4871909/UVeDu8D1
