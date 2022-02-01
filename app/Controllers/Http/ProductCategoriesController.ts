@@ -5,13 +5,20 @@ import UpdateProductCategoryValidator from 'App/Validators/UpdateProductCategory
 
 export default class ProductCategoriesController {
 
-    public async index({response}: HttpContextContract) {
+    public async index({ response }: HttpContextContract) {
         const categories = await ProductCategory.query().paginate(10)
         return response.status(200).send(categories);
     }
 
-    public async show({request, response}: HttpContextContract) {
-        const category = await ProductCategory.findOrFail(request.param('id'))
+    public async show({ request, response }: HttpContextContract) {
+        const category = await ProductCategory.query().where('id', request.param('id')).first()
+
+        if (!category) {
+            return response.status(404).send({
+                message: 'category not found'
+            })
+        }
+
         return response.status(200).send(category);
     }
 
@@ -29,7 +36,7 @@ export default class ProductCategoriesController {
     public async update({ request, response }: HttpContextContract) {
         const payload = await request.validate(UpdateProductCategoryValidator)
         let category = await ProductCategory.findOrFail(request.param('id'))
-        
+
         category.name = payload.name
         category.status = payload.status || false
 
@@ -38,8 +45,15 @@ export default class ProductCategoriesController {
         return response.status(204).send({});
     }
 
-    public async destroy({request, response}: HttpContextContract) {
-        const category = await ProductCategory.findOrFail(request.param('id'))
+    public async destroy({ request, response }: HttpContextContract) {
+        const category = await ProductCategory.query().where('id', request.param('id')).first()
+
+        if (!category) {
+            return response.status(404).send({
+                message: 'category not found'
+            })
+        }
+
         await category.delete()
 
         return response.status(200).send(category);

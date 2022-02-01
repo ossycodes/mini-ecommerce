@@ -36,4 +36,18 @@ export default class ProductSubCategoriesController {
 
         return response.created(subCategory);
     }
+
+    public async destroy({request, response}: HttpContextContract) {
+        const subCategory = await ProductSubCategory.query().where('id', request.param('id')).first()
+        
+        if(!subCategory) {
+            return response.status(404).send({
+                message: 'subcategory not found'
+            })
+        }
+
+        await subCategory.delete()
+
+        return response.status(200).send(subCategory);
+    }
 }
