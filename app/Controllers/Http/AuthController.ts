@@ -8,8 +8,8 @@ export default class AuthController {
         const payload = await request.validate(RegistrationValidator)
 
         const user = new User();
-        user.email = payload.email;
         user.username = payload.username;
+        user.email = payload.email;
         user.password = payload.password;
         user.type = payload.type;
         user.first_name = payload.first_name;
@@ -20,11 +20,14 @@ export default class AuthController {
 
         await user.save();
 
-        const token = await auth.use('api').login(user, {
+        const token = await auth.login(user, {
             expiresIn: '10 days',
         })
 
-        return token.toJSON()
+        return response.created({
+            user,
+            token: token.toJSON()
+        })
     }
 
     public async login({auth, request, response }) {
