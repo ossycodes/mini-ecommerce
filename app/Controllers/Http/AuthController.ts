@@ -20,7 +20,7 @@ export default class AuthController {
 
         await user.save();
 
-        const token = await auth.login(user, {
+        const token = await auth.use('api').login(user, {
             expiresIn: '10 days',
         })
 
