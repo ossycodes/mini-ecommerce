@@ -6,7 +6,7 @@ import UpdateProductCategoryValidator from 'App/Validators/UpdateProductCategory
 export default class ProductCategoriesController {
 
     public async index({ response }: HttpContextContract) {
-        const categories = await ProductCategory.query().paginate(10)
+        const categories = await ProductCategory.query().paginate(1, 10)
         return response.status(200).send(categories);
     }
 

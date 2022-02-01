@@ -65,11 +65,23 @@ export default class ProductsController {
         let productSubCategoryId = payload.product_sub_category_id
 
         if (productCategoryId) {
-            await ProductCategory.findOrFail(productCategoryId);
+            const category = await ProductCategory.query().where('id', productCategoryId).first()
+
+            if (!category) {
+                return response.status(404).send({
+                    message: 'category not found'
+                })
+            }
         }
 
         if (productSubCategoryId) {
-            await ProductSubCategory.findOrFail(productCategoryId);
+            const subCategory = await ProductSubCategory.query().where('id', productSubCategoryId).first()
+
+            if (!subCategory) {
+                return response.status(404).send({
+                    message: 'subcategory not found'
+                })
+            }
         }
 
         const product = await Product.findOrFail(request.param('id'));
