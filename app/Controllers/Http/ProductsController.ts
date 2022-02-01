@@ -6,10 +6,15 @@ import ProductSubCategory from 'App/Models/ProductSubCategory';
 import CreateProductValidator from 'App/Validators/CreateProductValidator';
 
 export default class ProductsController {
-    public async index({request, response}: HttpContextContract) {
+    public async index({response}: HttpContextContract) {
         const products =  await Product.query().paginate(10)
         console.log(products);
         return response.status(200).send(products);
+    }
+
+    public async show({request, response}: HttpContextContract) {
+        const product =  await Product.findOrFail(request.param('id'))
+        return response.status(200).send(product);
     }
 
     public async store({request, response, auth}: HttpContextContract) {
@@ -32,5 +37,40 @@ export default class ProductsController {
         });
         
         return response.created(product);
+    }
+
+    public async update({request, response, auth}: HttpContextContract) {
+        const payload = await request.validate(CreateProductValidator)
+
+        let productCategoryId = payload.product_category_id
+        let productSubCategoryId = payload.product_sub_category_id
+
+        if(productCategoryId) {
+            await ProductCategory.findOrFail(productCategoryId);
+        }
+
+        if(productSubCategoryId) {
+           await ProductSubCategory.findOrFail(productCategoryId);
+        }
+        
+        const product = new Product()
+
+        product.ProductCategoryId = productCategoryId || null
+        product.ProductSubCategoryId = productSubCategoryId || null
+        product.title = payload.title
+        product.description = payload.description
+        product.address = payload.address
+
+        await product.save();
+        
+        return response.created(product);
+    }
+
+    public async destroy({request, response}) {
+        const product = await Product.findOrFail(request.param('id'))
+
+        await product.delete()
+
+        return response.status(200).send(product);
     }
 }

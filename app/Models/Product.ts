@@ -12,10 +12,10 @@ export default class Product extends BaseModel {
   public userId: number
 
   @column()
-  public ProductCategoryId: number
+  public ProductCategoryId: number | null
 
   @column()
-  public ProductSubCategoryId: number
+  public ProductSubCategoryId: number | null
 
   @column()
   public title: string
