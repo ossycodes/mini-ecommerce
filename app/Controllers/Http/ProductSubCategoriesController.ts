@@ -5,20 +5,20 @@ import CreateProductSubCategoryValidator from 'App/Validators/CreateProductSubCa
 
 export default class ProductSubCategoriesController {
 
-    public async index() {
-        const categories = await ProductSubCategory.query().paginate(10)
-        return categories;
+    public async index({ response }: HttpContextContract) {
+        const subCategories = await ProductSubCategory.query().paginate(10)
+        return response.status(200).send(subCategories);
+    }
+
+    public async show({ request, response }: HttpContextContract) {
+        const subCategory = await ProductSubCategory.findOrFail(request.param('id'))
+        return response.status(200).send(subCategory);
     }
 
     public async store({ request, response }: HttpContextContract) {
         const payload = await request.validate(CreateProductSubCategoryValidator)
-        
-        let category = await ProductCategory.find(request.input('product_category_id'))
-        if (!category) {
-            return response.status(422).send({
-                'message': 'product category not found'
-            });
-        }
+
+        let category = await ProductCategory.findOrFail(request.input('product_category_id'))
 
         const subCategory = await category.related('sub_categories').create(payload)
         return response.created(subCategory);

@@ -10,6 +10,11 @@ export default class ProductCategoriesController {
         return response.status(200).send(categories);
     }
 
+    public async show({request, response}: HttpContextContract) {
+        const category = await ProductCategory.findOrFail(request.param('id'))
+        return response.status(200).send(category);
+    }
+
     public async store({ request, response }: HttpContextContract) {
         const payload = await request.validate(CreateProductCategoryValidator)
 
