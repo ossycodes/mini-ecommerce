@@ -12,6 +12,9 @@ export default class ProductSubCategory extends BaseModel {
   public id: number
 
   @column()
+  public ProductSubCategoryId: number
+
+  @column()
   public name: string
 
   @column()

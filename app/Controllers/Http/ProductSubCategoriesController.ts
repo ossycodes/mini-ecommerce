@@ -7,13 +7,12 @@ export default class ProductSubCategoriesController {
 
     public async index() {
         const categories = await ProductSubCategory.query().paginate(10)
-        
         return categories;
     }
 
     public async store({ request, response }: HttpContextContract) {
         const payload = await request.validate(CreateProductSubCategoryValidator)
-
+        
         let category = await ProductCategory.find(request.input('product_category_id'))
         if (!category) {
             return response.status(422).send({

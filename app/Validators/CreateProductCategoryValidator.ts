@@ -13,7 +13,7 @@ export default class CreateProductCategoryValidator {
       rules.maxLength(255)
     ]
     ),
-    status: schema.boolean(),
+    status: schema.boolean.optional(),
   })
 
   public messages = {}
