@@ -6,7 +6,7 @@ import UpdateProductCategoryValidator from 'App/Validators/UpdateProductCategory
 export default class ProductCategoriesController {
 
     public async index() {
-        const categories = await ProductCategory.query().paginate(1)
+        const categories = await ProductCategory.query().paginate(10)
         return categories;
     }
 
