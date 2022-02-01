@@ -12,8 +12,10 @@ export default class CreateProductValidator {
       trim: true
     },
     [
-      rules.maxLength(250)
-    ]
+      rules.maxLength(250),
+      rules.unique({ table: 'products', column: 'title' })
+    ],
+    
     ),
     description: schema.string({
       escape: true,
