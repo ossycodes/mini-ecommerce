@@ -17,6 +17,6 @@ export default class CategoriesController {
             status: payload.status,
         })
 
-        return category;
+        return response.created(category);
     }
 }
