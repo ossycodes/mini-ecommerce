@@ -14,8 +14,8 @@ export default class ProductSubCategories extends BaseSchema {
       .references('product_categories.id')
       .onDelete('CASCADE') // delete product_sub_category when product_category is deleted
       .nullable()
-      table.datetime('created_at', { useTz: true }).defaultTo(this.now())
-      table.datetime('updated_at', { useTz: true }).defaultTo(this.now())
+      table.datetime('created_at', { useTz: true }).defaultTo(this.now()) //remember to set to nullable
+      table.datetime('updated_at', { useTz: true }).defaultTo(this.now()) //remember to set to nullable
     })
   }
 

@@ -8,8 +8,8 @@ export default class ProductCategories extends BaseSchema {
       table.increments('id')
       table.string('name', 255)
       table.boolean('status').defaultTo(false)
-      table.datetime('created_at', { useTz: true }).defaultTo(this.now())
-      table.datetime('updated_at', { useTz: true }).defaultTo(this.now())
+      table.datetime('created_at', { useTz: true }).defaultTo(this.now()) //remember to set to nullable
+      table.datetime('updated_at', { useTz: true }).defaultTo(this.now()) //remember to set to nullable
     })
   }
 
