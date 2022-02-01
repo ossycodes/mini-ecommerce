@@ -1,53 +1,26 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import ProductCategory from 'App/Models/ProductCategory'
-import ProductSubCategory from 'App/Models/ProductSubCategory';
-import CreateProductSubCategoryValidator from 'App/Validators/CreateProductSubCategoryValidator';
-
+import ProductSubCategoryRepository from 'App/Repositories/ProductSubCategoryRepository';
 export default class ProductSubCategoriesController {
 
-    public async index({ response }: HttpContextContract) {
-        const subCategories = await ProductSubCategory.query().preload('category')
-        return response.status(200).send(subCategories);
+    subCategoryRepo
+
+    constructor() {
+        this.subCategoryRepo = new ProductSubCategoryRepository();
     }
 
+    public async index({ response }: HttpContextContract) {
+        return await this.subCategoryRepo.index(response);
+    }
+    
     public async show({ request, response }: HttpContextContract) {
-        
-        const subCategory = await ProductSubCategory.query().where('id', request.param('id')).preload('category')
-
-        if(subCategory.length === 0) {
-            return response.status(404).send({
-                message: 'subcategory not found'
-            })
-        }
-
-        return response.status(200).send(subCategory);
+        return await this.subCategoryRepo.show(request, response);
     }
 
     public async store({ request, response }: HttpContextContract) {
-        const payload = await request.validate(CreateProductSubCategoryValidator)
-       
-        let category = await ProductCategory.findOrFail(request.input('product_category_id', 0))
-
-        const subCategory =  await ProductSubCategory.create({
-            name: payload.name,
-            status: payload.status || false,
-            ProductCategoryId: category.id
-        });
-
-        return response.created(subCategory);
+        return await this.subCategoryRepo.store(request, response);
     }
 
     public async destroy({request, response}: HttpContextContract) {
-        const subCategory = await ProductSubCategory.query().where('id', request.param('id')).first()
-        
-        if(!subCategory) {
-            return response.status(404).send({
-                message: 'subcategory not found'
-            })
-        }
-
-        await subCategory.delete()
-
-        return response.status(200).send(subCategory);
+        return await this.subCategoryRepo.destroy(request, response);
     }
 }
