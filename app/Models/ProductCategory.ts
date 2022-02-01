@@ -14,7 +14,11 @@ export default class ProductCategory extends BaseModel {
   @column()
   public name: string
 
-  @column()
+  @column({
+    serialize: (value) => {
+      return Boolean(value);
+    }
+  })
   public status: boolean
 
   @hasMany(() => ProductSubCategory)

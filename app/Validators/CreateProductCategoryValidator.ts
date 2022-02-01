@@ -10,8 +10,9 @@ export default class CreateProductCategoryValidator {
       trim: true
     },
     [
-      rules.maxLength(255)
-    ]
+      rules.maxLength(255),
+      rules.unique({ table: 'product_categories', column: 'name' })
+    ],
     ),
     status: schema.boolean.optional(),
   })

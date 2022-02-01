@@ -18,7 +18,7 @@ export default class ProductSubCategoriesController {
     public async store({ request, response }: HttpContextContract) {
         const payload = await request.validate(CreateProductSubCategoryValidator)
 
-        let category = await ProductCategory.findOrFail(request.input('product_category_id'))
+        let category = await ProductCategory.findOrFail(request.input('product_category_id', 0))
 
         const subCategory = await category.related('sub_categories').create(payload)
         return response.created(subCategory);

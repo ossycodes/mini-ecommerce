@@ -4,10 +4,13 @@ Route
   .group(() => {
     Route.post('/register', 'AuthController.register')
     Route.post('/login', 'AuthController.login')
-    Route.resource('/products', 'ProductsController').apiOnly()
-    Route.resource('/categories', 'ProductCategoriesController').apiOnly()
-    // Route.resource('categories.subcategories', 'SubcategoriesController')
+    Route
+      .group(() => {
+        Route.resource('/products', 'ProductsController').apiOnly()
+        Route.resource('/categories', 'ProductCategoriesController').apiOnly()
+        Route.resource('/subcategories', 'ProductSubCategoriesController').apiOnly()
+      })
+      .middleware('auth')
   })
   .prefix('/v1')
   .prefix('/api')
-  .middleware('auth')

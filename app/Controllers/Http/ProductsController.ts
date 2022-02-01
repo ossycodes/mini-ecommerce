@@ -13,7 +13,8 @@ export default class ProductsController {
     }
 
     public async show({request, response}: HttpContextContract) {
-        const product =  await Product.findOrFail(request.param('id'))
+        // const product =  await Product.findOrFail(request.param('id'))
+        const product = await Product.query().where('id', 4).preload('category')
         return response.status(200).send(product);
     }
 
@@ -63,7 +64,7 @@ export default class ProductsController {
 
         await product.save();
         
-        return response.created(product);
+        return response.created(product.load('category'));
     }
 
     public async destroy({request, response}) {
