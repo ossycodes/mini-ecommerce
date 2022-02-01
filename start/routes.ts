@@ -24,7 +24,7 @@ Route
   .group(() => {
     // Route.resource('/users', 'UsersController').apiOnly()
     // Route.resource('/products', 'ProductsController').apiOnly()
-    Route.resource('/categories', 'CategoriesController').apiOnly()
+    Route.resource('/categories', 'ProductCategoriesController').apiOnly()
     // Route.resource('categories.subcategories', 'SubcategoriesController')
   })
   .prefix('/v1')

@@ -2,12 +2,12 @@ import { DateTime } from 'luxon'
 import {
   BaseModel,
   column,
-  hasMany,
-  HasMany
+  belongsTo,
+  BelongsTo
 } from '@ioc:Adonis/Lucid/Orm'
-import ProductSubCategory from './ProductSubCategory'
+import ProductCategory from './ProductCategory'
 
-export default class ProductCategory extends BaseModel {
+export default class ProductSubCategory extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -17,8 +17,8 @@ export default class ProductCategory extends BaseModel {
   @column()
   public status: boolean
 
-  @hasMany(() => ProductSubCategory)
-  public sub_categories: HasMany<typeof ProductSubCategory>
+  @belongsTo(() => ProductCategory)
+  public category: BelongsTo<typeof ProductCategory>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
