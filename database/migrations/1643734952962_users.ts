@@ -10,7 +10,7 @@ export default class Users extends BaseSchema {
       table.string('email', 255).unique().notNullable()
       table.string('password', 180).notNullable()
       table.string('remember_me_token', 255).nullable()
-      table.enu('account_type', ['admin', 'customer'], {
+      table.enu('type', ['admin', 'customer'], {
         useNative: true,
         enumName: 'users_type_enum',
         existingType: false,

@@ -28,7 +28,7 @@ export default class User extends BaseModel {
   public remember_me_token: string | null
 
   @column()
-  public account_type: Account
+  public type: "admin" | "customer"
 
   @column()
   public first_name: string
@@ -37,13 +37,13 @@ export default class User extends BaseModel {
   public last_name: string
 
   @column()
-  public contact_name: string
+  public contact_number: string
 
   @column()
   public address: string
 
   @column()
-  public status: Status
+  public status: "active" | "inactive"
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

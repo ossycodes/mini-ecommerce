@@ -40,7 +40,7 @@ export default class RegistrationValidator {
         rules.maxLength(255)
       ]
     ),
-    account_type: schema.enum(
+    type: schema.enum(
       ['admin', 'customer'] as const
     ),
     status: schema.enum(
