@@ -8,6 +8,7 @@ export default class AuthController {
         const payload = await request.validate(RegistrationValidator)
 
         const user = new User();
+        
         user.username = payload.username;
         user.email = payload.email;
         user.password = payload.password;
