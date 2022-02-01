@@ -1,61 +1,34 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ProductCategory from 'App/Models/ProductCategory'
+import ProductCategoryRepository from 'App/Repositories/ProductCategoryRepository';
 import CreateProductCategoryValidator from 'App/Validators/CreateProductCategoryValidator';
 import UpdateProductCategoryValidator from 'App/Validators/UpdateProductCategoryValidator';
 
 export default class ProductCategoriesController {
 
+    categoryRepo
+
+    constructor() {
+        this.categoryRepo = new ProductCategoryRepository();
+    }
+
     public async index({ response }: HttpContextContract) {
-        const categories = await ProductCategory.query().paginate(1, 10)
-        return response.status(200).send(categories);
+        return await this.categoryRepo.index(response);
     }
 
     public async show({ request, response }: HttpContextContract) {
-        const category = await ProductCategory.query().where('id', request.param('id')).first()
-
-        if (!category) {
-            return response.status(404).send({
-                message: 'category not found'
-            })
-        }
-
-        return response.status(200).send(category);
+        return await this.categoryRepo.show(request, response);
     }
 
     public async store({ request, response }: HttpContextContract) {
-        const payload = await request.validate(CreateProductCategoryValidator)
-
-        const category = await ProductCategory.create({
-            name: payload.name,
-            status: payload.status,
-        })
-
-        return response.created(category);
+        return await this.categoryRepo.store(request, response);
     }
 
     public async update({ request, response }: HttpContextContract) {
-        const payload = await request.validate(UpdateProductCategoryValidator)
-        let category = await ProductCategory.findOrFail(request.param('id'))
-
-        category.name = payload.name
-        category.status = payload.status || false
-
-        await category.save()
-
-        return response.status(204).send({});
+        return await this.categoryRepo.update(request, response);
     }
 
     public async destroy({ request, response }: HttpContextContract) {
-        const category = await ProductCategory.query().where('id', request.param('id')).first()
-
-        if (!category) {
-            return response.status(404).send({
-                message: 'category not found'
-            })
-        }
-
-        await category.delete()
-
-        return response.status(200).send(category);
+        return await this.categoryRepo.destory(request, response);
     }
 }

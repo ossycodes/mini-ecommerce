@@ -1,10 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
-import Product from "App/Models/Product";
-import ProductCategory from 'App/Models/ProductCategory';
-import ProductSubCategory from 'App/Models/ProductSubCategory';
 import ProductRepository from 'App/Repositories/ProductRepository';
-import CreateProductValidator from 'App/Validators/CreateProductValidator';
 
 export default class ProductsController {
     productRepo
