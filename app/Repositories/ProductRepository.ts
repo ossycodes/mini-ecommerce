@@ -5,7 +5,7 @@ import CreateProductValidator from "App/Validators/CreateProductValidator";
 
 export default class ProductRepository {
 
-    public async index(request, response) {
+    public async index(response) {
         const products = await Product.query().preload('category').preload('sub_category').paginate(1, 5)   
         return response.status(200).send(products);
     }
