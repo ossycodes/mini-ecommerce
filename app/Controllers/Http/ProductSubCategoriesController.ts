@@ -1,7 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ProductSubCategoryRepository from 'App/Repositories/ProductSubCategoryRepository';
 export default class ProductSubCategoriesController {
-
     subCategoryRepo
 
     constructor() {
