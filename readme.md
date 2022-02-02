@@ -10,3 +10,5 @@
 
 
 Postman API documentation link https://documenter.getpostman.com/view/4871909/UVeDu8D1
+
+Heroku API BASE URL  https://mini-ecommerce-adonisjs.herokuapp.com/api/v1/
